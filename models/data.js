@@ -8,5 +8,11 @@ let tecnologias = []
 //Lista de funcionalidades
 let funcionalidades = []
 
+//Lista de contactos 
+let contactos = []
 
-module.exports = {proyectos, tecnologias, funcionalidades}
+//Lista de usuarios
+let usuario = []
+
+
+module.exports = {proyectos, tecnologias, funcionalidades, contactos, usuario}

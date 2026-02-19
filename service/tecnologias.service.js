@@ -1,7 +1,7 @@
 const {tecnologias} = require('../models/data'); 
 
 //Creamos las tecnologias 
-const crearTecnologias = (data) => {
+const crear= (data) => {
     if(data.nombre ==="") {
         const err = new Error('Deben estar el campo del nombre con al menos un caracter'); 
         err.code = 400
@@ -12,15 +12,18 @@ const crearTecnologias = (data) => {
         id : tecnologias.length + 1, 
         nombre : data.nombre
     }
+
+    tecnologias.push(nuevaTecnologia); 
+    return nuevaTecnologia
 }
 
 //Leemos las tecnologias 
-const leerTecnologias = () => {
+const leer = () => {
     return tecnologias
 }
 
 //Actualizamos cada tecnologia 
-const actualizarLasTecnologias = (id, data) => {
+const actualizar = (id, data) => {
     const idNum = Number(id); 
     if (!Number.isInteger(idNum)) {
         const err = new Error('El id debe ser un numero');
@@ -28,7 +31,7 @@ const actualizarLasTecnologias = (id, data) => {
         throw err;
     }
 
-    const index = tecnologias.findIndex(t => t.id === id)
+    const index = tecnologias.findIndex(t => t.id === idNum)
 
     if (index === -1) {
         const err = new Error(`No se encontro la tecnologia con el ID ${idNum}`);
@@ -48,7 +51,7 @@ const actualizarLasTecnologias = (id, data) => {
 
 //Obtenemos las tecnologias 
 
-const eliminarTecnologia = (id) => {
+const eliminar = (id) => {
     const idNum = Number(id)
     if(!Number.isInteger(idNum)) {
         const err = new Error ('El id debe ser un error');
@@ -64,6 +67,14 @@ const eliminarTecnologia = (id) => {
         throw err; 
     }
 
-    const [tecnologiaEliminada] = tecnologias.splice(index, 1)[0]; 
+    const [tecnologiaEliminada] = tecnologias.splice(index, 1); 
     return tecnologiaEliminada
+}
+
+
+module.exports = {
+    crear, 
+    leer, 
+    actualizar, 
+    eliminar
 }

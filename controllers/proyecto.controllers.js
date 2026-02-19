@@ -1,12 +1,14 @@
 const proyectosService = require('../service/proyecto.service')
+const funcionalidadService = require('../service/funcionalidades.service')
+const tecnologiaService = require('../service/tecnologias.service');
 
 //POST /proyectos
-function crear(req, res) {
+function crear(service, req, res) {
     try {
-        const nuevo = proyectosService.crearProyecto(req.body); 
+        const nuevo = service.crear(req.body); 
         return res.status(201).json({
             success : true,
-            proyecto : nuevo
+            nuevo
         })
     } catch (error) {
         const status = error.code || 400; 
@@ -18,13 +20,13 @@ function crear(req, res) {
 }
 
 //GET /proyectos 
-function listar(req, res) {
+function listar(service, req, res) {
     try {
-        const proyectos = proyectosService.leerProyectos()
-        return res.status(201).json({
+        const proyectos = service.leer()
+        return res.status(200).json({
             success : true, 
             count : proyectos.length, 
-            proyectos : proyectos
+            proyectos
         })
 
     } catch (error) {
@@ -37,13 +39,13 @@ function listar(req, res) {
 }
 
 //PATCH /proyectos/:id
-function actualizar(req, res) {
+function actualizar(service, req, res) {
     try {
-        const actualizado = proyectosService.actualizarProyecto(req.params.id, req.body); 
+        const actualizado = service.actualizar(req.params.id, req.body); 
         return res.json({
             succes : true, 
             mensaje : "El proyecto ha sido actualizado con exito",
-            proyecto : actualizado
+            actualizado
         })
     } catch (error) {
         const status = error.code || 400; 
@@ -56,13 +58,13 @@ function actualizar(req, res) {
 
 
 // DELETE /proyecto/:id
-function eliminar(req, res) {
+function eliminar(service,req, res) {
     try {
-        const eliminado = proyectosService.eliminarProyecto(req.params.id)
+        const eliminado = service.eliminar(req.params.id)
         return res.json({
             success : true, 
             mensaje : "El proyecto ha sido elimino con efecto",
-            proyecto : eliminado
+            eliminado
         })
     } catch (error) {
         const status = error.code || 400; 
@@ -74,8 +76,20 @@ function eliminar(req, res) {
 }
 
 module.exports= {
-    crear, 
-    listar,
-    actualizar, 
-    eliminar
+    crearProyecto : (req, res)=> crear(proyectosService, req, res),
+    listarProyecto : (req, res)=> listar(proyectosService, req, res),
+    actualizarProyecto : (req, res)=> actualizar(proyectosService, req, res), 
+    eliminarProyecto : (req, res)=> eliminar(proyectosService, req, res), 
+    crearFuncionalidad : (req, res)=> crear(funcionalidadService, req, res),
+    listarFuncionalidad : (req, res)=> listar(funcionalidadService, req, res),
+    actualizarFuncionalidad : (req, res)=> actualizar(funcionalidadService, req, res),
+    eliminarFuncionalidad : (req, res)=> eliminar(funcionalidadService, req, res),
+    crearTecnologia : (req, res)=> crear(tecnologiaService, req, res),
+    leerTecnologia : (req, res)=> listar(tecnologiaService, req, res), 
+    actualizarTecnologia : (req, res)=> actualizar(tecnologiaService, req, res), 
+    eliminarTecnologia : (req, res)=> eliminar(tecnologiaService, req, res),
+    crearContacto : (req, res)=> crear(contactoService, req, res),
+    leerContacto : (req, res)=> listar(contactoService, req, res), 
+    actualizarContacto : (req, res)=> actualizar(contactoService, req, res), 
+    eliminarContacto : (req, res)=> eliminar(contactoService, req, res), 
 }

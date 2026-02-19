@@ -1,8 +1,8 @@
-const {funcionalidades, tecnologias} = require('../models/data'); 
+const {funcionalidades} = require('../models/data'); 
 
 //Crear funcionalidades 
 
-function crearFuncionalidad(data) {
+function crear(data) {
     if(data.nombre === ""){
         const err = new Error('El nombre debe tener al menos 1 caracter');
         err.code = 400;
@@ -20,13 +20,13 @@ function crearFuncionalidad(data) {
 
 // Leer todas las funcionalidades 
 
-function leerFuncionalidades () {
+function leer() {
     return funcionalidades;
 }
 
 //Actualizar las funcionalidades 
 
-function actualizarFuncionalidad (id, data) {
+function actualizar(id, data) {
     const idNum = Number(id)
     if (!Number.isInteger(id)) {
         const err = new Error('El id debe ser un numero');
@@ -53,7 +53,7 @@ function actualizarFuncionalidad (id, data) {
 
 
 //Eliminar funcionalidad 
-function eliminarFuncionalidad (id) {
+function eliminar(id) {
     const idNum = Number(id)
     if(!Number.isInteger(idNum)){
         const err = new Error('El id debe ser un numero positivo');
@@ -69,6 +69,13 @@ function eliminarFuncionalidad (id) {
         throw err; 
     }
 
-    const [funcionalidadEliminada] = funcionalidades.splice(index, 1)[0]; 
+    const [funcionalidadEliminada] = funcionalidades.splice(index, 1); 
     return funcionalidadEliminada
+}
+
+module.exports = {
+    crear, 
+    leer, 
+    actualizar, 
+    eliminar
 }

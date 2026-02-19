@@ -1,6 +1,6 @@
 const {proyectos, tecnologias, funcionalidades} = require('../models/data')
 
-function crearProyecto(data){
+function crear(data){
     if (data.nombre === "" && data.descripcion === "") {
         return data.status(404).json({
             success : false, 
@@ -11,19 +11,19 @@ function crearProyecto(data){
         id : proyectos.length + 1, 
         nombre : data.nombre, 
         descripcion : data.descripcion, 
-        tecnologiasIds : tecnologias.map(t => t.id),
-        funcionalidadesIds : funcionalidades.map(f => f.id)
+        tecnologiasIds : tecnologias,
+        funcionalidadesIds : funcionalidades
     }
     proyectos.push(nuevoProyecto)
 
     return nuevoProyecto;
 }
 
-function leerProyectos() {
+function leer() {
     return proyectos
 }
 
-function actualizarProyecto(id, data) {
+function actualizar(id, data) {
     const idNum = Number(id); 
     if (!Number.isInteger(id)) {
         throw new Error("ID invalido")
@@ -50,7 +50,7 @@ function actualizarProyecto(id, data) {
     return proyectoActual; 
 }
 
-function eliminarProyecto (id) {
+function eliminar(id) {
     const idNum = Number(id)
     if (!Number.isInteger(idNum)){
         throw new Error("El id debe ser un integer")
@@ -69,8 +69,8 @@ function eliminarProyecto (id) {
 
 
 module.exports = {
-    crearProyecto, 
-    leerProyectos, 
-    actualizarProyecto, 
-    eliminarProyecto
+    crear, 
+    leer, 
+    actualizar, 
+    eliminar
 }
