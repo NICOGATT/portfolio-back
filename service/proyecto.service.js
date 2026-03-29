@@ -1,4 +1,4 @@
-const {proyectos, tecnologias, funcionalidades} = require('../models/data')
+const Proyecto = require ('../models/Proyecto')
 
 function crear(data){
     if (data.nombre === "" && data.descripcion === "") {
@@ -19,8 +19,22 @@ function crear(data){
     return nuevoProyecto;
 }
 
-function leer() {
-    return proyectos
+async function leer() {
+    try {
+        //GET /api/proyectos - Obtener todos los proyectos
+        const {destacado, limit = 10} = req.query; 
+
+        //Construir filtros
+        let filtro = {}
+        if (destacado === 'true') filtro.destacado = true; 
+
+        //Ejecutar consulta
+        const proyectos = await Proyecto.find(filtro).sort({destacado: -1, fechaDeCreacion : -1}).limit(parseInt(limit))
+        
+        const total = await Proyecto.countDocuments(filtro)
+    } catch (error) {
+        
+    }
 }
 
 function actualizar(id, data) {

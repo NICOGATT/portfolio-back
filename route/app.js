@@ -1,6 +1,7 @@
 const express = require('express'); 
 const cors = require('cors');
 const dotenv = require('dotenv');
+const connectDB = require('../config/database.js'); 
 
 const { logger, morganLogger } = require('../middleware/logger');
 const { authenticateToken, authorizeRoles } = require('../middleware/auth');
@@ -12,13 +13,27 @@ const proyectoController = require('../controllers/proyecto.controllers');
 
 
 dotenv.config();
+
+//Conectar a mongodb 
+connectDB();
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use(cors());
 app.use(express.json());
 app.use(logger);
 app.use(morganLogger);
+
+//Ruta de prueba 
+
+app.get('/', (req, res) => {
+  res.json({
+    mensaje : 'API Portfolio MongoDB', 
+    status : 'online', 
+    database : process.env.MONGODB_URI ? 'configurada' : 'no configurada'
+  })
+})
 
 //Rutas
 app.post('/auth/login', authController.login);
@@ -68,7 +83,6 @@ app.listen(PORT, () => {
     📡 Puerto: ${PORT}
     ⏰ ${new Date().toLocaleString()}
     =================================
-    📚 Libros disponibles: 3
     🔧 Middleware activo: 
         - Logger profesional
         - Validación Joi

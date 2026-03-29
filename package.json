@@ -6,6 +6,9 @@
     "express": "^5.2.1",
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.3.0",
+    "mongoose-plugin-autoinc": "^1.1.9",
     "morgan": "^1.10.1"
   },
   "name": "portfolio-back",
